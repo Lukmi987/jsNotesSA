@@ -1,0 +1,2 @@
+- undefined means that variable has no defined value or object
+- null means that the variable is object with undefined value
