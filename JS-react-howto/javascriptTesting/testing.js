@@ -87,3 +87,68 @@ function Accumulator(startValue){
   this.value  += +prompt('tell me value');
   }
 }
+
+/////////////////////////////////////////////////
+function sumInput() {
+
+  let numbers = [];
+
+  while (true) {
+
+    let value = prompt("A number please?", 0);
+
+    // should we cancel?
+    if (value === "" || value === null || !isFinite(value)) break;
+
+    numbers.push(+value);
+  }
+
+  let sum = 0;
+  for (let number of numbers) {
+    sum += number;
+  }
+  return sum;
+}
+
+//alert( sumInput() );
+function camelize(str){
+  return str.split('-').map( (word, index) => index === 0 ? word : word[0].toUpperCase() + word.slice(1))
+}
+//console.log(camelize("list-style-image"));
+//////////////////////////////////////////////////////////////////////
+//better use filter()
+const arr = [5, 3, 8, 1]
+function filterRange(arr, a, b){
+ return  arr.map( el => {
+    if(el >= a && el <= b) {
+      return el
+    }
+  });
+}
+
+//console.log(filterRange(arr, 1, 4));
+
+
+function filterRangeCorrect(arr, a, b){
+ return  arr.filter( el => (el >= a && el <= b))
+}
+
+//console.log(filterRangeCorrect(arr, 1, 4));
+
+///////////////////////////////////////////
+
+
+function filterRangeInPlace(arr, a, b){
+  for (let i = 0; i < arr.length; i++){
+    console.log('moje i je prvni ',i);
+    let val = arr[i];
+    if (val < a || val > b){
+      arr.splice(i, 1);
+      i--;
+    }
+    console.log('moje i je ',i);
+  }
+}
+
+//console.log(filterRangeInPlace(arr, 1, 4))
+//alert(arr);
