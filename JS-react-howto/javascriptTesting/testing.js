@@ -152,3 +152,45 @@ function filterRangeInPlace(arr, a, b){
 
 //console.log(filterRangeInPlace(arr, 1, 4))
 //alert(arr);
+
+//////////////////////////////////////////////////////////////
+let prices = {
+  banana: 1,
+  orange: 2,
+  meat: 4,
+};
+
+//console.log(Object.fromEntries(Object.entries(prices).map(([key, value]) => [key, value * 2])));
+//console.log(Object.entries(prices));
+//////////////////////////////////////////////////////
+
+let salaries = {
+  "John": 100,
+   "Pete": 300,
+   "Mary": 250
+};
+
+function sumSalaries1(salaries){
+  //Object.values(salaries).map(val => val +1);
+
+  let sum = 0;
+  if(salaries){
+  for(let value of Object.values(salaries)){
+    sum += value;
+  }
+}
+return sum;
+}
+
+//alert(sumSalaries(salaries));
+
+// reduce loops over array of salaries,
+// adding them up
+// and returns the result
+function sumSalaries(salaries) {
+  return Object.values(salaries).reduce((a, b, c, d,) => {
+    return a + b;
+  },50) // 650
+}
+
+alert(sumSalaries(salaries));
