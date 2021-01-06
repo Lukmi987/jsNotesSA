@@ -193,4 +193,61 @@ function sumSalaries(salaries) {
   },50) // 650
 }
 
-alert(sumSalaries(salaries));
+//alert(sumSalaries(salaries));
+///////////////////////////////////////////
+
+let company = { // the same object, compressed for brevity
+  sales: [{name: 'John', salary: 1000}, {name: 'Alice', salary: 1600 }],
+  development: {
+    sites: [{name: 'Peter', salary: 2000}, {name: 'Alex', salary: 1800 }],
+    internals: [{name: 'Jack', salary: 1300}]
+  }
+};
+
+function sumSalaries(department) {
+  //console.log(typeof department); // not array in the first call
+
+  if (Array.isArray(department)) { // case (1)
+    return department.reduce((prev, current) => prev + current.salary, 0); // sum the array
+  } else { // case (2)
+    let sum = 0;
+
+    for (let subdep of Object.values(department)) {
+console.log(subdep);
+      if(Array.isArray(subdep)){
+
+          }
+      sum += sumSalaries(subdep); // recursively call for subdepartments, sum the results
+    }
+    return sum;
+  }
+}
+
+//alert(sumSalaries(company))
+/////////////////////////////////////////////////////////////////
+function showName() {
+  alert( arguments.length );
+  alert( arguments[0] );
+  alert( arguments[1] );
+
+  // it's iterable
+  // for(let arg of arguments) alert(arg);
+}
+
+// shows: 2, Julius, Caesar
+//showName("Julius", "Caesar");
+
+// shows: 1, Ilya, undefined (no second argument)
+//showName("Ilya");
+
+
+let sayHi = function (who) {
+console.log(who);
+  if (who) {
+    alert(`Hello, ${who}`);
+  } else {
+    //func("Guest"); // use func to re-call itself
+  }
+};
+
+sayHi(); // Hello, Guest
