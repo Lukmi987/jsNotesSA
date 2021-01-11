@@ -1,5 +1,11 @@
+A closure is a function that remembers its outer variables and can access them!!!!!!!!!!!!!!!!!1111
+------------------------------------
+
 In JavaScript, every running function, code block {...}, and the script as a whole have an internal (hidden) associated object
 known as the Lexical Environment.
+
+!!!a function remembers where it was born in the special property [[Environment]].
+It references the Lexical Environment from where it’s created
 
 The Lexical Environment object consists of two parts:
 1. Environment Record – an object that stores all local variables as its properties (and some other information like the value of this).
