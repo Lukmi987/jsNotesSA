@@ -250,4 +250,162 @@ console.log(who);
   }
 };
 
-sayHi(); // Hello, Guest
+//ayHi(); // Hello, Guest
+/////////////////////////////////
+
+function slow(x) {
+  // there can be a heavy CPU-intensive job here
+  alert(`Called with ${x}`);
+  return x;
+}
+
+function cachingDecorator(func) {
+  let cache = new Map();
+
+  return function(x) {
+    if (cache.has(x)) {    // if there's such key in cache
+      return cache.get(x); // read the result from it
+    }
+
+    let result = func(x);  // otherwise call func
+
+    cache.set(x, result);  // and cache (remember) the result
+    return result;
+  };
+}
+
+// slow = cachingDecorator(slow);
+// debugger;
+// slow(1);
+// slow(1);
+
+//////////////////////////////////////////////
+
+let worker = {
+  slow(min, max) {
+    alert(`Called with ${min},${max}`);
+    return min + max;
+  }
+};
+
+function cachingDecorator(func, hash) {
+  let cache = new Map();
+  return function() {
+    let key = hash(arguments); // (*)
+    if (cache.has(key)) {
+      return cache.get(key);
+    }
+
+    let result = func.call(this, ...arguments); // (**)
+
+    cache.set(key, result);
+    return result;
+  };
+}
+
+function hash(args) {
+  return args[0] + ',' + args[1];
+}
+
+// worker.slow = cachingDecorator(worker.slow, hash);
+// console.log(worker.slow
+/////////////////////////////////////////////////
+
+function partial(func, ...argsBound) {
+  return function(...args) { // (*)
+    return func.call(this, ...argsBound, ...args);
+  }
+}
+
+// Usage:
+let user = {
+  firstName: "John",
+  say(time, phrase) {
+    alert(`[${time}] ${this.firstName}: ${phrase}!`);
+  }
+};
+
+// add a partial method with fixed time
+user.sayNow = partial(user.say, new Date().getHours() + ':' + new Date().getMinutes());
+//debugger;
+//user.sayNow("Hello");
+//////////////////////////////////////////////////////////////
+
+// function defer(f, ms) {
+//   return function() {
+//     setTimeout(() => f.apply(this, arguments), ms)
+//   };
+// }
+//
+// function sayHi(who) {
+//   alert('Hello, ' + who);
+// }
+
+//let sayHiDeferred = defer(sayHi, 2000);
+//sayHiDeferred("John"); // Hello, John after 2 seconds
+/////////////////////////////////////////////////////
+// let user1 = {
+//   name: "John",
+//   toString() {
+//     return this.name;
+//   }
+// };
+//
+// for(let key in user1) alert(key);
+//
+// console.log(user1.toString());
+/////////////////////////////////////////\
+//
+// let head = {
+//   glasses: 1
+// };
+//
+// let table = {
+//   pen: 3,
+//   __proto__: head
+// };
+//
+// let bed = {
+//   sheet: 1,
+//   pillow: 2,
+//   __proto__:  table
+// };
+//
+// let pockets = {
+//   money: 2000,
+//   __proto__: bed
+// };
+
+// let dictionary = Object.create(null, {
+//   toString: { //define toString property
+//     value() {
+//         return Object.keys(this).join();
+//     }
+//   }
+// });
+// dictionary.apple = "Apple";
+// dictionary.__proto__ = "test"; // __proto__ is a regular property key here
+//
+// // only apple and __proto__ are in the loop
+// for(let key in dictionary) {
+//   alert(key);
+// }
+// console.dir(dictionary);
+// //comma-separated list of properties by toString
+// alert(dictionary);
+
+function Rabbit(name) {
+  this.name = name;
+}
+Rabbit.prototype.sayHi = function() {
+  alert( this.name );
+}
+
+let rabbit = new Rabbit("Rabbit");
+console.dir(Rabbit);
+console.dir(rabbit);
+console.dir(Object.getPrototypeOf(rabbit));
+// rabbit.sayHi();                        // Rabbit
+// Rabbit.prototype.sayHi();              // undefined
+// Object.getPrototypeOf(rabbit).sayHi(); // undefined
+// rabbit.__proto__.sayHi();              // undefined
