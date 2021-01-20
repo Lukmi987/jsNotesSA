@@ -1,5 +1,5 @@
 Primitives
-hey are not objects. But if we try to access their properties, temporary wrapper objects are created using built-in
+they are not objects. But if we try to access their properties, temporary wrapper objects are created using built-in
 constructors String, Number and Boolean
 -They provide the methods and disappear.
 -These objects are created invisibly to us and most engines optimize them out,
