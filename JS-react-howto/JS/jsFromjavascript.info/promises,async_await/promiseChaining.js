@@ -56,6 +56,36 @@ fetch('/article/promise-chaining/user.json')
   The next .then in the chain will wait for that. !!!!!
 As a good practice, an asynchronous action should always return a promise!!!!. That makes it possible to plan actions after it;
 even if we don’t plan to extend the chain now, we may need it later.
+
+rewrite it using async/await:
+1. We'll replace .then call with Await
+2. Also we shoud make the func async for them to work
+async function showAvatar() {
+
+  // read our JSON
+  let response = await fetch('/article/promise-chaining/user.json');
+  let user = await response.json();
+
+  // read github user
+  let githubResponse = await fetch(`https://api.github.com/users/${user.name}`);
+  let githubUser = await githubResponse.json();
+
+  // show the avatar
+  let img = document.createElement('img');
+  img.src = githubUser.avatar_url;
+  img.className = "promise-avatar-example";
+  document.body.append(img);
+
+  // wait 3 seconds
+  await new Promise((resolve, reject) => setTimeout(resolve, 3000));
+
+  img.remove();
+
+  return githubUser;
+}
+
+showAvatar();
+
 ===================================================================================================
 Summary:
 

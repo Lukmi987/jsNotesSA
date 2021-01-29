@@ -402,10 +402,113 @@ Rabbit.prototype.sayHi = function() {
 }
 
 let rabbit = new Rabbit("Rabbit");
-console.dir(Rabbit);
-console.dir(rabbit);
-console.dir(Object.getPrototypeOf(rabbit));
+// console.dir(Rabbit);
+// console.dir(rabbit);
+// console.dir(Object.getPrototypeOf(rabbit));
 // rabbit.sayHi();                        // Rabbit
 // Rabbit.prototype.sayHi();              // undefined
 // Object.getPrototypeOf(rabbit).sayHi(); // undefined
 // rabbit.__proto__.sayHi();              // undefined
+
+//////////////////////////////////////////////////////////////////////////
+
+
+
+// function loadJson(url) {
+//   return fetch(url)
+//     .then(response => {
+//       if (response.status === 200) {
+//         return response.json();
+//       } else {
+//         throw new HttpError(response);
+//       }
+//     });
+// }
+
+// //Ask for a user name until github returns a valid users
+// function demoGithubUser(){
+//   let name = prompt('Enter a name?', 'lukas');
+//
+//   return loadJson(`https://api.github.com/users/${name}`)
+//     .then(user => {
+//       alert(`Full name: ${user.name}`);
+//       return user;
+//     })
+//     .catch(err => {
+//       if(err instanceof HttpError && err.response.status === 404) {
+//         alert("No such user, please reenter");
+//         return demoGithubUser();
+//       } else {
+//         throw err;
+//       }
+//     });
+// }
+//demoGithubUser();
+
+class HttpError extends Error {
+  constructor(response) {
+    super(`${response.status} for ${response.url}`);
+    this.name = 'HttpError';
+    this.response = response;
+  }
+}
+
+async function loadJson(url) {
+    let response;
+    try {
+      x;
+           response = await fetch(url);
+              console.log('muj resposne', response);
+    if (response.status === 200) {
+      let json = await response.json();
+      return json;
+    }
+  } catch {
+    console.log('muj resposne2', response);
+      throw new HttpError(response);
+    }
+  }
+
+
+async function demoGithubUser() {
+
+  while(true) {
+    try{
+         let name = prompt("Enter a name?", "iliakan");
+        let user = await loadJson(`https://api.github.com/users/${name}`);
+        alert(user.name);
+        return user;
+
+      } catch(err) {
+            console.dir(err);
+           if(err instanceof HttpError && err.response.status === 404) {
+            alert('Sorry name not found try again');
+          } else {
+            throw err;
+          }
+      }
+    }
+}
+
+demoGithubUser();
+
+/////////////////////////////////////////////////////////////
+//We have a “regular” function called f. How can you call the async function wait() and use its result inside of f?
+
+async function wait() {
+  await new Promise(resolve => setTimeout(resolve, 1000));
+
+  return 10;
+}
+
+ function f() {
+   wait()
+    .then( res => alert(res));
+}
+
+//or
+async function f() {
+return await wait();
+return wait().then(res => res)
+}
+console.log(f());
