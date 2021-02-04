@@ -3,7 +3,6 @@ Capturing and Bubbling phase: basically, it's as if the event also happened in e
     -if we attach the same event listener, also for example, to the section element, then we would get the exact same alert window for the section element as well.
     -So we would have handled the exact same event twice, once at its target, and once at one of its parent elements.
 
-    We can also say that events propagate,  which is really what capturing and bubbling is.
     It's events propagating from one place to another.
 
     The event happens at the document root and from there it then travels down to the target element and from there it bubbles up
